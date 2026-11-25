@@ -1,64 +1,196 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Reward Preview</title>
+<title>Rewards & Offers</title>
+
 <style>
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  min-height: 100vh;
   font-family: Arial, sans-serif;
   color: #111;
+  min-height: 100vh;
   background: repeating-linear-gradient(
-    -45deg, white 0px, white 70px,
-    #dffcff 70px, #dffcff 140px
+    -45deg, #fff 0px, #fff 70px,
+    #dcfaff 70px, #dcfaff 140px
   );
   background-size: 280px 280px;
   animation: moveBg 8s linear infinite;
 }
+
 @keyframes moveBg {
   to { background-position: 280px 280px; }
 }
-header { text-align: center; padding: 25px; }
-main { max-width: 520px; margin: 20px auto; padding: 18px; }
+
+header {
+  text-align: center;
+  padding: 30px 15px;
+}
+
+main {
+  max-width: 400px;
+  margin: 20px auto;
+  padding: 18px;
+}
+
 .card {
   background: white;
-  border: 4px solid #111;
-  border-radius: 20px;
-  padding: 30px 22px;
+  border: 3px solid #111;
+  border-radius: 18px;
+  padding: 30px 18px;
   text-align: center;
-  box-shadow: 0 10px 0 #111;
+  box-shadow: 0 9px 0 #111;
 }
-img.reward {
-  width: 230px;
-  height: 145px;
+
+.reward-image {
+  width: 180px;
+  height: 140px;
   object-fit: contain;
 }
-button, .button {
-  display: block;
+
+button, .offer-button {
   width: 100%;
-  padding: 16px;
+  border: none;
+  border-radius: 10px;
   background: #111;
   color: white;
-  border: 0;
-  border-radius: 12px;
-  font-size: 18px;
+  padding: 15px;
   font-weight: bold;
   cursor: pointer;
   text-decoration: none;
+  display: block;
+  text-align: center;
 }
-.offer {
-  border: 2px solid #111;
-  border-radius: 12px;
+
+.notice {
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.75);
+  backdrop-filter: blur(6px);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
   padding: 15px;
-  margin-top: 15px;
-  text-align: left;
 }
-.notice { font-size: 14px; line-height: 1.5; }
+
+.overlay.active {
+  display: flex;
+}
+
+.popup {
+  width: 100%;
+  max-width: 460px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 20px 80px #0006;
+  animation: appear .3s ease;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0;
+    transform: translateY(25px) scale(.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.popup-header {
+  position: relative;
+  padding: 25px;
+  background: linear-gradient(135deg,#009dff,#00cfe8);
+  color: white;
+  text-align: center;
+}
+
+.popup-header h2 {
+  margin: 0 0 8px;
+}
+
+.close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border-radius: 50%;
+  background: #0003;
+  font-size: 22px;
+}
+
+.popup-body {
+  padding: 18px;
+}
+
+.offer {
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 14px;
+  margin-bottom: 12px;
+  box-shadow: 0 3px 12px #0001;
+}
+
+.offer-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.offer-icon {
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+
+.offer h3 {
+  font-size: 15px;
+  margin: 0 0 5px;
+}
+
+.offer p {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.offer-button {
+  background: linear-gradient(90deg,#008cff,#00b8db);
+  margin-top: 10px;
+}
+
+.spinner {
+  width: 38px;
+  height: 38px;
+  border: 4px solid #eee;
+  border-top-color: #009dff;
+  border-radius: 50%;
+  margin: 20px auto;
+  animation: spin .8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
 </style>
 </head>
+
 <body>
 
 <header>
@@ -70,64 +202,99 @@ button, .button {
   <a href="index.html">← Back to Rewards</a>
   <br><br>
 
-  <section class="card" id="preview">
-    <img class="reward" id="image" alt="Selected gift card">
-    <h1 id="name"></h1>
+  <section class="card">
+    <img id="image" class="reward-image" alt="Gift card">
+    <h2 id="name"></h2>
     <h1 id="value"></h1>
 
-    <p><strong>REWARD PREVIEW</strong></p>
+    <strong>REWARD PREVIEW</strong>
+
     <p class="notice">
-      This is a gift-card preview, not an issued reward.
       Sponsored offers do not guarantee a gift card.
+      This preview is not an issued reward.
     </p>
 
-    <button onclick="loadOffers()">VERIFY NOW</button>
-  </section>
-
-  <section class="card" id="offerPage" hidden>
-    <h2>Available Offers</h2>
-    <p class="notice">
-      Sponsored offers selected for your country and device.
-      We may earn a commission.
-    </p>
-    <div id="offers">Loading offers...</div>
+    <button onclick="openOffers()">VERIFY NOW</button>
   </section>
 </main>
+
+<div class="overlay" id="overlay"
+     role="dialog" aria-modal="true"
+     aria-label="Available sponsored offers">
+
+  <div class="popup">
+
+    <div class="popup-header">
+      <button class="close" onclick="closeOffers()"
+              aria-label="Close">×</button>
+      <h2>Available Offers</h2>
+      <div>Offers for your country and device</div>
+    </div>
+
+    <div class="popup-body">
+      <p class="notice">
+        Choose an available sponsored offer.
+        Review its requirements before continuing.
+        We may earn a commission.
+      </p>
+
+      <div id="offers"></div>
+    </div>
+
+  </div>
+</div>
 
 <script>
 const rewards = {
   playstation: ["PlayStation", "$100", "downloadplaystat.png"],
   minecraft: ["Minecraft", "$26.95", "downloadmine.jfif"],
-  google: ["Google Play", "$100", "downloadggplay.png"],
-  apple: ["Apple", "$100", "downloadios.png"],
-  itunes: ["iTunes", "$100", "downloaditune.png"],
+  google: ["Google Play", "$200", "downloadggplay.png"],
+  apple: ["Apple Gift Card", "$12", "downloadios.png"],
+  itunes: ["iTunes", "$500", "downloaditune.png"],
   xbox: ["Xbox", "$100", "downloadxbox.png"],
-  steam: ["Steam", "$100", "downloadsteam.jfif"],
-  roblox: ["Roblox", "$100", "downloadrobo.jfif"],
-  razer: ["Razer Gold", "$100", "imagesrazer.png"],
-  gaming: ["Gaming", "$100", "images%20%281%29gaming.jfif"],
-  riot: ["Riot Games", "$100", "images%20%281%29riot.jfif"],
+  steam: ["Steam", "", "downloadsteam.jfif"],
+  roblox: ["Roblox", "", "downloadrobo.jfif"],
+  razer: ["Razer Gold", "", "imagesrazer.png"],
+  gaming: ["Gaming", "$200", "images%20%281%29gaming.jfif"],
+  riot: ["Riot Games", "", "images%20%281%29riot.jfif"],
   fortnite: ["Fortnite", "$100", "downloadort.jfif"]
 };
 
-const key = new URLSearchParams(location.search).get("reward");
-const reward = rewards[key] || rewards.playstation;
+const selected = new URLSearchParams(location.search)
+  .get("reward");
+
+const reward = rewards[selected] || rewards.playstation;
 
 document.getElementById("name").textContent = reward[0];
 document.getElementById("value").textContent = reward[1];
 document.getElementById("image").src = reward[2];
+
 document.getElementById("date").textContent =
   new Date().toLocaleDateString();
 
-async function loadOffers() {
-  document.getElementById("preview").hidden = true;
-  document.getElementById("offerPage").hidden = false;
+function closeOffers() {
+  document.getElementById("overlay").classList.remove("active");
+  document.body.style.overflow = "";
+}
+
+document.addEventListener("keydown", e => {
+  if (e.key === "Escape") closeOffers();
+});
+
+async function openOffers() {
+  document.getElementById("overlay").classList.add("active");
+  document.body.style.overflow = "hidden";
 
   const container = document.getElementById("offers");
 
+  container.innerHTML =
+    '<div class="spinner"></div>' +
+    '<p style="text-align:center">Loading available offers...</p>';
+
   try {
     const response = await fetch(
-      "https://jimmygiveaway.sinscatbombastic.workers.dev/offers"
+      "https://jimmygiveaway.sinscatbombastic.workers.dev/offers",
+      { cache: "no-store" }
     );
 
     if (!response.ok) throw new Error();
@@ -136,11 +303,12 @@ async function loadOffers() {
     container.replaceChildren();
 
     if (!Array.isArray(offers) || !offers.length) {
-      container.textContent = "No offers currently available.";
+      container.textContent = "No offers available for your location.";
       return;
     }
 
     for (const offer of offers.slice(0, 10)) {
+
       let destination;
 
       try {
@@ -153,8 +321,26 @@ async function loadOffers() {
       const card = document.createElement("div");
       card.className = "offer";
 
+      const top = document.createElement("div");
+      top.className = "offer-top";
+
+      if (offer.network_icon) {
+        try {
+          const iconUrl = new URL(offer.network_icon);
+          if (iconUrl.protocol === "https:") {
+            const img = document.createElement("img");
+            img.className = "offer-icon";
+            img.src = iconUrl.href;
+            img.alt = "";
+            img.onerror = () => img.remove();
+            top.appendChild(img);
+          }
+        } catch {}
+      }
+
       const title = document.createElement("h3");
-      title.textContent = offer.name || "Sponsored offer";
+      title.textContent = offer.name || "Sponsored Offer";
+      top.appendChild(title);
 
       const description = document.createElement("p");
       description.textContent = offer.anchor || "";
@@ -163,24 +349,27 @@ async function loadOffers() {
       requirement.textContent =
         "Requirement: " + (offer.conversion || "See offer terms");
 
-      const link = document.createElement("a");
-      link.className = "button";
-      link.href = destination.href;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer sponsored";
-      link.textContent = "VIEW OFFER";
+      const button = document.createElement("a");
+      button.className = "offer-button";
+      button.href = destination.href;
+      button.target = "_blank";
+      button.rel = "noopener noreferrer sponsored";
+      button.textContent = "VIEW OFFER →";
 
-      card.append(title, description, requirement, link);
+      card.append(top, description, requirement, button);
       container.appendChild(card);
     }
 
     if (!container.children.length) {
       container.textContent = "No available offers.";
     }
+
   } catch {
-    container.textContent = "Unable to load offers. Please try again.";
+    container.textContent =
+      "Unable to load offers. Close and try again.";
   }
 }
 </script>
+
 </body>
 </html>
