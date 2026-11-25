@@ -2,786 +2,145 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Verify Reward</title>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rewards & Offers</title>
 <style>
-* {
-    box-sizing: border-box;
-}
-
+* { box-sizing: border-box; }
 body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #111;
-    overflow-x: hidden;
-
-    background:
-        repeating-linear-gradient(
-            -45deg,
-            #ffffff 0px,
-            #ffffff 70px,
-            #dffcff 70px,
-            #dffcff 140px
-        );
-
-    background-size: 280px 280px;
-    animation: moveBg 8s linear infinite;
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, sans-serif;
+  color: #111;
+  background: repeating-linear-gradient(
+    -45deg, white 0px, white 70px,
+    #dffcff 70px, #dffcff 140px
+  );
+  background-size: 280px 280px;
+  animation: moveBg 8s linear infinite;
 }
-
 @keyframes moveBg {
-    from {
-        background-position: 0 0;
-    }
-
-    to {
-        background-position: 280px 280px;
-    }
+  to { background-position: 280px 280px; }
 }
-
-
-/* LANGUAGE */
-
-.language {
-    position: absolute;
-    top: 18px;
-    right: 18px;
-    z-index: 20;
+header {
+  text-align: center;
+  padding: 25px;
 }
-
-#google_translate_element select {
-    padding: 7px 10px;
-    border-radius: 8px;
-    border: 1px solid #bbb;
-    background: white;
-    font-weight: 600;
+main {
+  max-width: 520px;
+  margin: 20px auto;
+  padding: 18px;
 }
-
-
-/* HEADER */
-
-.header {
-    text-align: center;
-    padding: 25px 15px 10px;
+.card {
+  background: white;
+  border: 4px solid #111;
+  border-radius: 20px;
+  padding: 22px;
+  box-shadow: 0 10px 0 #111;
 }
-
-.logo {
-    width: 105px;
-    max-width: 30vw;
-    display: block;
-    margin: 0 auto 8px;
+.offer {
+  border: 2px solid #111;
+  border-radius: 12px;
+  padding: 15px;
+  margin: 15px 0;
 }
-
-.brand {
-    font-size: 30px;
-    font-weight: 1000;
-    letter-spacing: 2px;
-    margin: 0;
+.offer h3 { margin-top: 0; }
+.button {
+  display: block;
+  padding: 14px;
+  background: #111;
+  color: white;
+  border-radius: 10px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
 }
-
-.subtitle {
-    font-size: 24px;
-    font-weight: 900;
-    margin: 4px 0;
-}
-
-.date {
-    font-size: 14px;
-    font-weight: 700;
-    margin-top: 8px;
-}
-
-
-/* MAIN */
-
-.container {
-    width: 100%;
-    max-width: 520px;
-    margin: 30px auto;
-    padding: 0 18px;
-}
-
-.back {
-    display: inline-block;
-    margin-bottom: 20px;
-    color: #111;
-    text-decoration: none;
-    font-weight: 800;
-    font-size: 15px;
-}
-
-.back:hover {
-    text-decoration: underline;
-}
-
-
-/* REWARD CARD */
-
-.reward-card {
-    position: relative;
-    background: rgba(255,255,255,0.96);
-    border: 4px solid #111;
-    border-radius: 20px;
-    padding: 48px 22px 28px;
-    text-align: center;
-    box-shadow: 0 10px 0 #111;
-}
-
-
-/* HANGER */
-
-.hanger {
-    position: absolute;
-    top: -27px;
-    left: 50%;
-    transform: translateX(-50%);
-
-    width: 72px;
-    height: 42px;
-
-    background: #111;
-
-    clip-path: polygon(
-        50% 0%,
-        67% 17%,
-        82% 38%,
-        100% 55%,
-        91% 100%,
-        9% 100%,
-        0% 55%,
-        18% 38%,
-        33% 17%
-    );
-}
-
-.hanger-hole {
-    position: absolute;
-    top: 8px;
-    left: 50%;
-    transform: translateX(-50%);
-
-    width: 17px;
-    height: 17px;
-
-    border-radius: 50%;
-    background: white;
-}
-
-
-/* REWARD IMAGE */
-
-.reward-image {
-    width: 230px;
-    height: 145px;
-    object-fit: contain;
-
-    display: block;
-    margin: 5px auto 12px;
-}
-
-.reward-name {
-    font-size: 29px;
-    font-weight: 1000;
-    margin: 5px 0;
-}
-
-.reward-value {
-    font-size: 36px;
-    font-weight: 1000;
-    margin: 5px 0 15px;
-}
-
-
-/* CODE BOX */
-
-.code-label {
-    font-size: 14px;
-    font-weight: 900;
-    margin-bottom: 7px;
-}
-
-.code-box {
-    width: 100%;
-
-    background: white;
-    border: 3px solid #111;
-    border-radius: 10px;
-
-    padding: 12px 8px;
-
-    font-family: "Courier New", monospace;
-    font-size: 19px;
-    font-weight: 900;
-    letter-spacing: 2px;
-
-    white-space: nowrap;
-    overflow: hidden;
-
-    min-height: 48px;
-}
-
-
-/* CODE CHARACTER ANIMATION */
-
-.code-character {
-    display: inline-block;
-    min-width: 10px;
-    animation: codePop 0.18s ease;
-}
-
-@keyframes codePop {
-    0% {
-        opacity: 0;
-        transform: translateY(-7px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-
-/* MESSAGE */
-
-.message {
-    margin: 15px auto 18px;
-
-    max-width: 390px;
-
-    font-size: 14px;
-    line-height: 1.4;
-    font-weight: 700;
-}
-
-.message strong {
-    font-weight: 1000;
-}
-
-
-/* VERIFY BUTTON */
-
-.verify-button {
-    display: block;
-    width: 100%;
-
-    padding: 17px 20px;
-
-    border-radius: 13px;
-    border: 3px solid #111;
-
-    background: #111;
-    color: white;
-
-    font-size: 21px;
-    font-weight: 1000;
-    letter-spacing: 1px;
-
-    cursor: pointer;
-    text-decoration: none;
-
-    transition: 0.2s;
-}
-
-.verify-button:hover {
-    transform: translateY(-2px);
-    background: #222;
-}
-
-.verify-button:disabled {
-    opacity: 0.45;
-    cursor: wait;
-    transform: none;
-}
-
-
-/* DELIVERY */
-
-.delivery {
-    display: inline-block;
-
-    background: #e8fbff;
-    border: 2px solid #111;
-    border-radius: 30px;
-
-    padding: 8px 17px;
-
-    font-size: 13px;
-    font-weight: 800;
-
-    margin-bottom: 16px;
-}
-
-
-/* MOBILE */
-
-@media (max-width: 600px) {
-
-    .language {
-        position: static;
-        text-align: center;
-        margin-top: 10px;
-    }
-
-    .header {
-        padding-top: 12px;
-    }
-
-    .brand {
-        font-size: 26px;
-    }
-
-    .subtitle {
-        font-size: 20px;
-    }
-
-    .reward-card {
-        padding-top: 43px;
-    }
-
-    .reward-image {
-        width: 200px;
-        height: 125px;
-    }
-
-    .reward-name {
-        font-size: 25px;
-    }
-
-    .reward-value {
-        font-size: 32px;
-    }
-
-    .code-box {
-        font-size: 16px;
-        letter-spacing: 1px;
-    }
+.notice {
+  font-size: 14px;
+  line-height: 1.5;
 }
 </style>
 </head>
-
-
 <body>
 
-
-<!-- LANGUAGE -->
-
-<div class="language">
-    <div id="google_translate_element"></div>
-</div>
-
-
-<!-- HEADER -->
-
-<header class="header">
-
-    <img
-        src="logo.png"
-        class="logo"
-        alt="MR BEAST"
-    >
-
-    <h1 class="brand">
-        MR BEAST
-    </h1>
-
-    <div class="subtitle">
-        GIFT CARD GIVEAWAY
-    </div>
-
-    <div class="date" id="date"></div>
-
+<header>
+  <h1>REWARDS & OFFERS</h1>
+  <p>Explore available sponsored offers</p>
 </header>
 
+<main>
+  <a href="index.html">← Back</a>
+  <br><br>
 
+  <div class="card">
+    <h2>Available Offers</h2>
 
-<main class="container">
+    <p class="notice">
+      Offers are automatically selected for your
+      country and device. We may earn a commission.
+      Completing an offer does not guarantee a gift card.
+    </p>
 
-    <a href="index.html" class="back">
-        ← Back to Rewards
-    </a>
-
-
-    <div class="reward-card">
-
-        <!-- HANGER -->
-
-        <div class="hanger">
-            <div class="hanger-hole"></div>
-        </div>
-
-
-        <!-- REWARD IMAGE -->
-
-        <img
-            id="rewardImage"
-            class="reward-image"
-            src="downloadplaystat.png"
-            alt="Gift Card"
-        >
-
-
-        <!-- REWARD NAME -->
-
-        <div
-            id="rewardName"
-            class="reward-name"
-        >
-            PlayStation
-        </div>
-
-
-        <!-- VALUE -->
-
-        <div
-            id="rewardValue"
-            class="reward-value"
-        >
-            $100
-        </div>
-
-
-        <!-- DELIVERY -->
-
-        <div class="delivery">
-            ⚡ Quick Email Delivery
-        </div>
-
-
-        <!-- CODE -->
-
-        <div class="code-label">
-            YOUR REWARD CODE
-        </div>
-
-        <div
-            id="codeBox"
-            class="code-box"
-            aria-live="polite"
-        >
-            Generating...
-        </div>
-
-
-        <!-- MESSAGE -->
-
-        <div
-            id="message"
-            class="message"
-        >
-            Preparing your reward code...
-        </div>
-
-
-        <!-- VERIFY -->
-
-        <button
-            id="verifyButton"
-            class="verify-button"
-            type="button"
-            disabled
-        >
-            VERIFY NOW
-        </button>
-
-    </div>
-
+    <div id="offers">Loading offers...</div>
+  </div>
 </main>
 
-
-
 <script>
-
-/* DATE */
-
-const today = new Date();
-
-document.getElementById("date").textContent =
-    today.toLocaleDateString("en-US", {
-        month: "long",
-        day: "numeric",
-        year: "numeric"
-    });
-
-
-
-/* REWARD DATABASE */
-
-const rewards = {
-
-    playstation: {
-        name: "PlayStation",
-        value: "$100",
-        image: "downloadplaystat.png"
-    },
-
-    minecraft: {
-        name: "Minecraft",
-        value: "$26.95",
-        image: "downloadmine.jfif"
-    },
-
-    google: {
-        name: "Google Play",
-        value: "$100",
-        image: "downloadggplay.png"
-    },
-
-    apple: {
-        name: "Apple",
-        value: "$100",
-        image: "downloadios.png"
-    },
-
-    itunes: {
-        name: "iTunes",
-        value: "$100",
-        image: "downloaditune.png"
-    },
-
-    xbox: {
-        name: "Xbox",
-        value: "$100",
-        image: "downloadxbox.png"
-    },
-
-    steam: {
-        name: "Steam",
-        value: "$100",
-        image: "downloadsteam.jfif"
-    },
-
-    roblox: {
-        name: "Roblox",
-        value: "$100",
-        image: "downloadrobo.jfif"
-    },
-
-    razer: {
-        name: "Razer Gold",
-        value: "$100",
-        image: "imagesrazer.png"
-    },
-
-    gaming: {
-        name: "Gaming",
-        value: "$100",
-        image: "images%20%281%29gaming.jfif"
-    },
-
-    riot: {
-        name: "Riot Games",
-        value: "$100",
-        image: "images%20%281%29riot.jfif"
-    },
-
-    fortnite: {
-        name: "Fortnite",
-        value: "$100",
-        image: "downloadort.jfif"
-    }
-
-};
-
-
-
-/* GET SELECTED REWARD */
-
-const params = new URLSearchParams(window.location.search);
-
-const rewardKey =
-    params.get("reward") || "playstation";
-
-const reward =
-    rewards[rewardKey] || rewards.playstation;
-
-
-
-/* DISPLAY REWARD */
-
-document.getElementById("rewardImage").src =
-    reward.image;
-
-document.getElementById("rewardImage").alt =
-    reward.name;
-
-document.getElementById("rewardName").textContent =
-    reward.name;
-
-document.getElementById("rewardValue").textContent =
-    reward.value;
-
-
-
-/* CODE ANIMATION */
-
-const codeBox =
-    document.getElementById("codeBox");
-
-const message =
-    document.getElementById("message");
-
-const verifyButton =
-    document.getElementById("verifyButton");
-
-
-const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-
-function randomCharacter() {
-
-    return characters[
-        Math.floor(
-            Math.random() * characters.length
-        )
-    ];
-
-}
-
-
-function randomCode(length) {
-
-    let result = "";
-
-    for (let i = 0; i < length; i++) {
-        result += randomCharacter();
-    }
-
-    return result;
-
-}
-
-
-/*
-    This is a visual code animation.
-    It does not represent a real redeemed
-    gift-card code.
-*/
-
-const finalCode =
-    "U1PM-R1JG-ZA1T-####";
-
-let animationCount = 0;
-
-const animationLimit = 18;
-
-
-const animationTimer =
-    setInterval(function() {
-
-        animationCount++;
-
-        let animatedCode =
-            randomCode(4) + "-" +
-            randomCode(4) + "-" +
-            randomCode(4) + "-####";
-
-        codeBox.innerHTML = animatedCode;
-
-        codeBox.style.animation = "none";
-
-        void codeBox.offsetWidth;
-
-        codeBox.style.animation =
-            "codePop 0.18s ease";
-
-
-        if (animationCount >= animationLimit) {
-
-            clearInterval(animationTimer);
-
-            codeBox.textContent =
-                finalCode;
-
-            message.innerHTML =
-                "Verify now to continue and access the final four characters.";
-
-            verifyButton.disabled = false;
-
-        }
-
-    }, 180);
-
-
-
-/* VERIFY BUTTON */
-
-verifyButton.addEventListener(
-    "click",
-    function() {
-
-        /*
-            AdBlueMedia trigger.
-            Your current locker uses _oy().
-        */
-
-        if (typeof _oy === "function") {
-
-            _oy();
-
-        } else {
-
-            alert(
-                "Verification is currently unavailable. Please try again."
-            );
-
-        }
-
-    }
-);
-
-</script>
-
-
-
-<!-- GOOGLE TRANSLATE -->
-
-<script type="text/javascript">
-
-function googleTranslateElementInit() {
-
-    new google.translate.TranslateElement(
-        {
-            pageLanguage: "en",
-            includedLanguages:
-                "en,es,fr,de,it,pt,hi,ar,tr,ru,ja,ko",
-
-            layout:
-                google.translate.TranslateElement.InlineLayout.SIMPLE
-        },
-
-        "google_translate_element"
+async function loadOffers() {
+  const container = document.getElementById("offers");
+
+  try {
+    const response = await fetch(
+      "https://jimmygiveaway.sinscatbombastic.workers.dev/offers"
     );
 
+    if (!response.ok) throw new Error();
+
+    const offers = await response.json();
+    container.replaceChildren();
+
+    if (!Array.isArray(offers) || !offers.length) {
+      container.textContent =
+        "No offers currently available.";
+      return;
+    }
+
+    offers.slice(0, 10).forEach(offer => {
+      const card = document.createElement("div");
+      card.className = "offer";
+
+      const title = document.createElement("h3");
+      title.textContent = offer.name || "Sponsored offer";
+
+      const description = document.createElement("p");
+      description.textContent = offer.anchor || "";
+
+      const requirement = document.createElement("p");
+      requirement.textContent =
+        "Requirement: " + (offer.conversion || "See offer terms");
+
+      const link = document.createElement("a");
+      link.className = "button";
+
+      const destination = new URL(offer.url);
+      if (destination.protocol !== "https:") return;
+
+      link.href = destination.href;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer sponsored";
+      link.textContent = "VIEW OFFER";
+
+      card.append(title, description, requirement, link);
+      container.appendChild(card);
+    });
+
+  } catch {
+    container.textContent =
+      "Unable to load offers. Please try again later.";
+  }
 }
 
+loadOffers();
 </script>
-
-
-<script
-    type="text/javascript"
-    src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
-</script>
-
-
-<!-- YOUR CURRENT ADBLUEMEDIA LOCKER -->
-
-<script type="text/javascript">
-
-var olwbB_gWG_xHbKfc = {
-    "it": 4632665,
-    "key": "6babc"
-};
-
-</script>
-
-<script
-    src="https://d1chbu4sfo2xhu.cloudfront.net/31e82c9.js">
-</script>
-
 
 </body>
 </html>
